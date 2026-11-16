@@ -20,6 +20,8 @@ public static class DependencyInjection
                 "Set it via user-secrets or the ConnectionStrings__DefaultConnection environment variable.");
         }
 
+        services.Configure<DatabaseOptions>(configuration.GetSection(DatabaseOptions.SectionName));
+
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(connectionString, sql =>
             {

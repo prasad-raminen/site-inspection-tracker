@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Models;
 using SiteInspectionTracker.Api.Infrastructure;
 using SiteInspectionTracker.Application;
 using SiteInspectionTracker.Infrastructure;
+using SiteInspectionTracker.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -65,7 +66,8 @@ app.UseCors(ClientCorsPolicy);
 app.MapControllers();
 app.MapHealthChecks("/health", new HealthCheckOptions { ResponseWriter = HealthCheckResponseWriter.WriteAsync });
 
-app.Run();
+await app.Services.InitializeDatabaseAsync();
+await app.RunAsync();
 
 /// <summary>Exposed so integration tests can bootstrap the app with WebApplicationFactory.</summary>
 public partial class Program
