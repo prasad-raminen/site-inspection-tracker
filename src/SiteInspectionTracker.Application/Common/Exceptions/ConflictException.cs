@@ -1,0 +1,10 @@
+namespace SiteInspectionTracker.Application.Common.Exceptions;
+
+/// <summary>Thrown when a request conflicts with the current state of a resource. Mapped to HTTP 409.</summary>
+public sealed class ConflictException : Exception
+{
+    public ConflictException(string message)
+        : base(message)
+    {
+    }
+}
