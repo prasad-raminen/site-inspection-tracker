@@ -1,0 +1,51 @@
+# Local development stack: SQL Server 2022 + ASP.NET Core API + React client (nginx).
+#   docker compose up --build
+# Client: http://localhost:3000   API/Swagger: http://localhost:5080/swagger
+#
+# The SA password below is a throw-away example for local development only.
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+      MSSQL_SA_PASSWORD: "Your_strong_password123"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$${MSSQL_SA_PASSWORD}\" -C -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+  api:
+    build:
+      context: .
+      dockerfile: src/SiteInspectionTracker.Api/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=SiteInspectionTracker;User Id=sa;Password=Your_strong_password123;TrustServerCertificate=True"
+      Database__ApplyMigrationsOnStartup: "true"
+      Database__SeedSampleData: "true"
+      Cors__AllowedOrigins__0: "http://localhost:5173"
+      Cors__AllowedOrigins__1: "http://localhost:3000"
+    ports:
+      - "5080:8080"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+
+  client:
+    build:
+      context: ./client
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+
+volumes:
+  sqlserver-data:
