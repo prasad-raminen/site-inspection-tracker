@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>SiteInspectionTracker.Application</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SiteInspectionTracker.Domain\SiteInspectionTracker.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <RootNamespace>SiteInspectionTracker.Api</RootNamespace>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SiteInspectionTracker.Application\SiteInspectionTracker.Application.csproj" />
+    <ProjectReference Include="..\SiteInspectionTracker.Infrastructure\SiteInspectionTracker.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
