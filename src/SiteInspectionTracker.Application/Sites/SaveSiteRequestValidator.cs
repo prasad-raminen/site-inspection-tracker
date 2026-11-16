@@ -16,7 +16,7 @@ public sealed class SaveSiteRequestValidator : AbstractValidator<SaveSiteRequest
 
         RuleFor(x => x)
             .Must(x => x.Latitude.HasValue == x.Longitude.HasValue)
-            .WithName("Coordinates")
+            .OverridePropertyName("Coordinates")
             .WithMessage("Latitude and longitude must be provided together.");
     }
 }

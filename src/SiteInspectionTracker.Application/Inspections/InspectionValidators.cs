@@ -34,7 +34,7 @@ public sealed class InspectionQueryValidator : AbstractValidator<InspectionQuery
         RuleFor(x => x.Status).IsInEnum().When(x => x.Status.HasValue);
         RuleFor(x => x)
             .Must(x => x.From is null || x.To is null || x.From <= x.To)
-            .WithName("To")
+            .OverridePropertyName(nameof(InspectionQuery.To))
             .WithMessage("'To' must be on or after 'From'.");
     }
 }
