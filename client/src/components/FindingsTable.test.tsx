@@ -34,7 +34,7 @@ const findings: Finding[] = [
 
 function renderTable(props: Partial<Parameters<typeof FindingsTable>[0]> = {}) {
   return render(
-    <MemoryRouter>
+    <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <FindingsTable findings={findings} {...props} />
     </MemoryRouter>,
   );
